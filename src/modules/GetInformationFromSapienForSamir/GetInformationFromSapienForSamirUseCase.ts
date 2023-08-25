@@ -42,7 +42,7 @@ import { getInformationSislabraForPicaPau } from '../GetInformationSislabra';
 const { Poppler } = require("node-poppler");
 const fs = require("fs");
 import { CreateHtmlFromPdf } from '../../python_PdfToHtml';
-
+import jwt from 'jsonwebtoken'
 export class GetInformationFromSapienForSamirUseCase {
 
     async execute(data: IGetInformationsFromSapiensDTO): Promise<any> {
@@ -57,7 +57,8 @@ export class GetInformationFromSapienForSamirUseCase {
         let response: Array<IInformationsForCalculeDTO> = [];
         let responseForPicaPau: Array<String> = [];
         let tarefaId: any = "";
-
+        const token = jwt.decode(data.token)
+        const id_user: any = token.sub
         
         
             let tarefas = await getTarefaUseCase.execute({ cookie, usuario_id, etiqueta: data.etiqueta });
@@ -300,7 +301,7 @@ export class GetInformationFromSapienForSamirUseCase {
                         let impedDossie: Array<string> = await getInformationDossieForPicaPau.impedimentos(parginaDosPrevFormatada, parginaDosPrev);
                         responseForPicaPau.push(...impedDossie) 
     
-                        let impedSislabra: Array<string> = await getInformationSislabraForPicaPau.impedimentos(arrayDosIDParaBuscarpdf, cookie, CpfAutor)
+                        let impedSislabra: Array<string> = await getInformationSislabraForPicaPau.impedimentos(arrayDosIDParaBuscarpdf, cookie, CpfAutor, id_user)
                         responseForPicaPau.push(...impedSislabra)
                     
                         

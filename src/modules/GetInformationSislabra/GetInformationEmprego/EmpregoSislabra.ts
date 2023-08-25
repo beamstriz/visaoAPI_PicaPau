@@ -41,11 +41,7 @@ export class Emprego{
                 return [];
             }
             
-           /*  console.log("#$$$$$$$$$$$$")
-            console.log(typeof(valores))
-            console.log(valores)
-            console.log(valores[0])
-            console.log(typeof(valores[0])) */
+          
             for(let j=0; j<valores.length; j++){
                 
                 if(parseFloat(valores[j].replace(".","").replace(",","."))>3000){    

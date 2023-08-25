@@ -18,7 +18,7 @@ import { lePdf } from "../GetPdfSislabra/GetPdfSislabra/HeadPdf";
 
 
 export class GetInformationSislabraForPicaPau{
-    async impedimentos(arrayDosIDParaBuscarpdf: Array<any>, cookie: any, cpfAutor: string): Promise<Array<string>>{
+    async impedimentos(arrayDosIDParaBuscarpdf: Array<any>, cookie: any, cpfAutor: string, id_user: any): Promise<Array<string>>{
         console.log("ENTROU NO FOR DO SISLABRA")
                 var responseForPicaPau : Array<string> = [];
                 var VerificarAutorMaisDeUmaAutorEmpresa: number = 0;
@@ -45,17 +45,14 @@ export class GetInformationSislabraForPicaPau{
                     for(let i=0; i<arrayDosIDParaBuscarpdf.length; i++){
                         //console.log(`https://sapiens.agu.gov.br/documento/${arrayDosIDParaBuscarpdf[i]}`)
                         console.log("entrou aqui n vezes")
-                        await downloadPDFWithCookies(`https://sapiens.agu.gov.br/documento/${arrayDosIDParaBuscarpdf[i]}`,cookie)
+                        await downloadPDFWithCookies(`https://sapiens.agu.gov.br/documento/${arrayDosIDParaBuscarpdf[i]}`,cookie, id_user)
                         .then(() => console.log('PDF downloaded successfully!'))
                         .catch((error) => console.error('Error downloading PDF:', error));
                         try{
                             console.log("aqui")
-                        const pdf = await readPDF('build/modules/GetPdfSislabra/GetPdfSislabra/sislabra.pdf')
-                        await criarHtml();
-                        //console.log(pdf);
-                        //Ative quando for para produção
-                        /* const pdf = await readPDF('resources/app/build/modules/GetPdfSislabra/GetPdfSislabra/sislabra.pdf') */
-                        /* await criarHtml().then(() => console.log("ok")).catch((error) => console.log(error)); */
+                        const pdf = await readPDF(`src/modules/GetPdfSislabra/GetPdfSislabra/${id_user}.pdf`)
+                        await criarHtml(id_user);
+                        
 
                         
                             
@@ -194,8 +191,8 @@ export class GetInformationSislabraForPicaPau{
 
 
 
-                        await excluirArquivosComPrefixo();
-                        deletePDF('sislabra.pdf');
+                        //await excluirArquivosComPrefixo();
+                        //deletePDF('sislabra.pdf');
                         
                         }catch{ 
                             responseForPicaPau.length == 0;

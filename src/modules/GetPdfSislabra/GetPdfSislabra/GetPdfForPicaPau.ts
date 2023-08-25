@@ -26,7 +26,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-async function downloadPDFWithCookies(url: string, cookies: string): Promise<void> {
+async function downloadPDFWithCookies(url: string, cookies: string, id_user: any): Promise<void> {
   const response = await axios.get(url, {
     headers: {
       Cookie: cookies,
@@ -35,7 +35,7 @@ async function downloadPDFWithCookies(url: string, cookies: string): Promise<voi
     responseType: 'arraybuffer',
   });
 
-  const filePath = path.join(__dirname, 'sislabra.pdf');
+  const filePath = path.join(__dirname, `${id_user}.pdf`);
  /* const filePath = path.join('resources/app/build/modules/GetPdfSislabra/GetPdfSislabra/sislabra.pdf'); */
   //console.log(filePath);
   fs.writeFileSync(filePath, response.data);

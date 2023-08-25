@@ -39,6 +39,11 @@ import { enderecosEncontrados } from '../GetInformationSislabra/GetInformationEn
 import { doacoesEleitorais } from '../GetInformationSislabra/GetInformationDoacoesEleitorais/DoacoesEleitoraisSislabra';
 import { imoveisSp } from '../GetInformationSislabra/GetInformationImoveis/imoveisSaopaulo'; */
 import { getInformationSislabraForPicaPau } from '../GetInformationSislabra';
+import jwt from 'jsonwebtoken'
+
+
+
+
 export class GetInformationFromSapienForSamirUseCaseSemIdade {
 
     async execute(data: IGetInformationsFromSapiensDTO): Promise<any> {
@@ -49,6 +54,10 @@ export class GetInformationFromSapienForSamirUseCaseSemIdade {
         const usuario = (await getUsuarioUseCase.execute(cookie));
 
         const usuario_id = `${usuario[0].id}`;
+        console.log(data)
+        const token = jwt.decode(data.token)
+        const id_user: any = token.sub
+
 
         let response: Array<IInformationsForCalculeDTO> = [];
         let responseForPicaPau: Array<String> = [];
@@ -308,7 +317,7 @@ export class GetInformationFromSapienForSamirUseCaseSemIdade {
                         let impedDossie: Array<string> = await getInformationDossieForPicaPauSemIdade.impedimentos(parginaDosPrevFormatada, parginaDosPrev);
                         responseForPicaPau.push(...impedDossie) 
     
-                        let impedSislabra: Array<string> = await getInformationSislabraForPicaPau.impedimentos(arrayDosIDParaBuscarpdf, cookie, CpfAutor)
+                        let impedSislabra: Array<string> = await getInformationSislabraForPicaPau.impedimentos(arrayDosIDParaBuscarpdf, cookie, CpfAutor, id_user)
                         responseForPicaPau.push(...impedSislabra)
                     
     

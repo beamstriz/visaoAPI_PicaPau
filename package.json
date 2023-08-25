@@ -12,6 +12,7 @@
     "start:docker:dev": "yarn && tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
@@ -21,6 +22,7 @@
     "fetch": "^1.1.0",
     "fs": "^0.0.1-security",
     "jsdom": "^21.0.0",
+    "jsonwebtoken": "^9.0.1",
     "moment": "^2.29.4",
     "morgan": " ^1.10.0 ",
     "node-fetch": "^3.3.1",
